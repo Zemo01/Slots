@@ -1,7 +1,40 @@
+import random #For random number generation
+
+
 
 MAX_LINES = 3
 MAX_BET = 100
 MIN_BET = 1
+
+ROWS = 3
+COLS = 3 
+
+symbol_count = {  #created a dictionary here
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+
+def get_slot_machine_spin(rows, cols, symbols):
+    all_symbols = [] #list 
+    for symbol, symbol_count in symbols.items(): #adds the number of symbols into the symbols list // .items gives key and value associated with a dictionary 
+        for _ in range(symbol_count): # _ in python is an anon variable. Used for to not have an unsued variable if the count or itteration is not of importance 
+            all_symbols.append(symbol)
+
+    columns = [] #nested list // columns = [ [], [], [] ]
+    for _ in range(cols): # _ in this case is col
+        column = []
+        current_symbols = all_symbols[:] # [:] to copy a list; aka "slice" operator
+        for _ in range(rows): #in this case is row
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+
+        columns.append(column)
+
+    return columns
+
 
 
 def deposit():
