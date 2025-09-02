@@ -16,6 +16,29 @@ symbol_count = {  #created a dictionary here
     "D": 8
 }
 
+symbol_value = { #adding multiplier values
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
+
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    winning_lines = []
+    for line in range(lines): #looping thru every row user bet on
+        symbol = columns[0][line] #symbol in the first column of the current row
+        for column in columns: #loop thru each column and check for symbol 
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else: #if no break occurs, execute this if else
+            winnings += values[symbol] * bet
+            winning_lines.append(line + 1)
+
+    return winnings, winning_lines
+
+
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols = [] #list 
     for symbol, symbol_count in symbols.items(): #adds the number of symbols into the symbols list // .items gives key and value associated with a dictionary 
@@ -39,9 +62,12 @@ def print_slot_machine(columns):
     for row in range(len(columns[0])): #loops thru each row
         for i, column in enumerate(columns): #loop thru each column, only print the current row we are on. (this transposes out horizontal array into a vertical one)
             if i != len(columns) - 1:
-                print(column[row], "|")
+                print(column[row], end=" | ")
             else:
-                print(column[row])
+                print(column[row], end="")
+
+        print()
+
 
 def deposit():
     while True:
@@ -102,5 +128,8 @@ def main():
 
     slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+    print(f"You won ${winnings}.")
+    print(f"You won on lines:", *winning_lines) # (*Var) is a splat/unpack operator, passes every line from the list into the print function here.
 
 main()
