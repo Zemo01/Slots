@@ -35,7 +35,13 @@ def get_slot_machine_spin(rows, cols, symbols):
 
     return columns
 
-
+def print_slot_machine(columns):
+    for row in range(len(columns[0])): #loops thru each row
+        for i, column in enumerate(columns): #loop thru each column, only print the current row we are on. (this transposes out horizontal array into a vertical one)
+            if i != len(columns) - 1:
+                print(col[row], "|")
+            else:
+                print(column[row])
 
 def deposit():
     while True:
